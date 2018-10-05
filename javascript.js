@@ -49,4 +49,15 @@ database.ref().on("child_added", function(childShapshot) {
     var trainDestination = childShapshot.val().destination;
     var firstTrainTime = childShapshot.val().time;
     var trainFrequency = childShapshot.val().frequency;
-})
+
+    //create new row
+    var newRow = ("<tr>").append(
+        $("<td>").text(trainName),
+        $("<td>").text(trainDestination),
+        $("<td>").text(firstTrainTime),
+        $("<td>").text(trainFrequency),
+    );
+
+    //append new row to table
+    $("#train-table > tbody").append(newRow);
+});

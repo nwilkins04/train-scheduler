@@ -1,0 +1,17 @@
+body {
+    background-image: url(./images/mickey-parts.jpg);
+}
+
+.jumbotron {
+    background-color: darkred;
+    color: black;
+}
+
+#add-train-btn {
+    background-color: darkred;
+    color: white;
+}
+
+.card-header {
+    background-color: darkgoldenrod;
+}
