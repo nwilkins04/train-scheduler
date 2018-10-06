@@ -28,7 +28,7 @@ var config = {
           name: trainName,
           destination: trainDestination,
           time: firstTrainTime,
-          frequency: trainFrequency
+          frequency: trainFrequency,
       };
 
       //uploads train data to database
@@ -55,6 +55,21 @@ database.ref().on("child_added", function(childShapshot) {
     var trainFrequency = childShapshot.val().frequency;
     var firstTrainTime = childShapshot.val().time;
    
+    //train math
+    var timeConverted = moment(trainFrequency, "HH:mm").subtract(1, "years");
+    console.log(timeConverted);
+    
+    var diffTime = moment().diff(moment(timeConverted), "minutes");
+    console.log("difference in time: " + diffTime);
+    
+    var tRemainder = diffTime % firstTrainTime;
+    console.log(tRemainder);
+    
+    var tMinutesTillTrain = firstTrainTime - tRemainder;
+    console.log("minutes till train: " + tMinutesTillTrain);
+    
+    var nextTrain = moment().add(tMinutesTillTrain, "minutes");
+    console.log("arrival time: " + moment(nextTrain).format("hh:mm"));
 
     //create new row
     var newRow = $("<tr>").append(
@@ -62,35 +77,9 @@ database.ref().on("child_added", function(childShapshot) {
         $("<td>").text(trainDestination),
         $("<td>").text(trainFrequency),
         $("<td>").text(firstTrainTime),
-        $("<td>").text(tMinutesTillTrain),
+        $("<td>").text(moment(nextTrain).format("hh:mm")),
     );
 
     //append new row to table
     $("#train-table > tbody").append(newRow);
-});
-
-//train time math
-var tFrequency = $("#frequency-input");
-
-var firstTime = $("#first-train-input");
-
-var timeConverted = moment(firstTime, "HH:mm").subtract(1, "year");
-console.log(timeConverted);
-
-var currentTime = moment();
-console.log("current time: " + moment(currentTime).format("hh:mm"));
-
-var diffTime = moment().diff(moment(timeConverted), "minutes");
-diffTime = parseInt(diffTime);
-console.log("difference in time: " + diffTime);
-
-var tRemainder = diffTime % tFrequency;
-tRemainder = parseInt(tRemainder);
-console.log(tRemainder);
-
-var tMinutesTillTrain = tFrequency - tRemainder;
-tMinutesTillTrain = parseInt(tMinutesTillTrain);
-console.log("minutes till train: " + tMinutesTillTrain);
-
-var nextTrain = moment().add(tMinutesTillTrain, "minutes");
-console.log("arrival time: " + moment(nextTrain).format("hh:mm"));
+    });

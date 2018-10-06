@@ -5,6 +5,15 @@ body {
 .jumbotron {
     background-color: darkred;
     color: black;
+    font-family: "disneyText";
+}
+
+h1 {
+    font-size: 60px;
+}
+
+h3 {
+    font-size: 40px;
 }
 
 #add-train-btn {
@@ -14,4 +23,10 @@ body {
 
 .card-header {
     background-color: darkgoldenrod;
+}
+
+@font-face {
+    font-family: "disneyText";
+    src: url("./waltograph42.ttf")
+    format("truetype");
 }
